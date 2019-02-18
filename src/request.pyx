@@ -25,8 +25,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from direct.directnotify.DirectNotifyGlobal import directNotify
-
 import traceback
 
 cdef class HTTPRequest(object):

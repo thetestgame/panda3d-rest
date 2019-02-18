@@ -28,8 +28,6 @@ SOFTWARE.
 from panda3d.core import HTTPClient, HTTPChannel, DocumentSpec
 from panda3d.core import Ramfile, UniqueIdAllocator, ConfigVariableInt
 
-from direct.directnotify.DirectNotifyGlobal import directNotify
-
 import json
 
 cdef class HTTPRest(object):
