@@ -1,5 +1,3 @@
-<img src="https://avatars3.githubusercontent.com/u/1965106?s=200&v=4" align="right">
-
 [![Build Status](https://travis-ci.com/NxtStudios/p3d-rest.svg?branch=master)](https://travis-ci.com/NxtStudios/p3d-rest)
 
 Panda3d REST
