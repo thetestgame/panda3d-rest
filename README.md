@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.com/NxtStudios/p3d-rest.svg?branch=master)](https://travis-ci.com/NxtStudios/p3d-rest)
 
-Panda3d REST
+Panda3D REST
 ============
 p3d-rest provides a panda native solution to performing RESTful HTTP GET/POST requests using non-blocking io.
 
@@ -26,7 +26,7 @@ make
 ### Requirements
 
 - The Panda3D SDK (get it <a href="http://www.panda3d.org/download.php?sdk">here</a>)
-- CMake 2.6 or higher (get it <a href="https://cmake.org/download/">here</a>)
+- CMake 3.2 or higher (get it <a href="https://cmake.org/download/">here</a>)
 - Cython (get it <a href="https://cython.org/">here</a>)
 
 ## License
