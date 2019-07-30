@@ -46,7 +46,7 @@ cdef class HTTPRest(object):
         self._request_allocator = UniqueIdAllocator(0, max_http_requests)
         self._requests = {}
 
-    cpdef void update(self, dt):
+    cpdef void update(self):
         """
         Performs update operations on the PandaHTTP instance
         """
