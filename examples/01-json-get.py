@@ -25,7 +25,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import rest
+from panda3d import rest
 
 from direct.showbase.ShowBase import ShowBase
 
