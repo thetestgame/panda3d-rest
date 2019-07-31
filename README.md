@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.com/NxtStudios/p3d-rest.svg?branch=master)](https://travis-ci.com/NxtStudios/p3d-rest)
-
 Panda3D REST
 ============
 p3d-rest provides a panda native solution to performing RESTful HTTP GET/POST requests using non-blocking io.
