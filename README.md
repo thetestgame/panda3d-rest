@@ -30,4 +30,4 @@ make
 - Cython (get it <a href="https://cython.org/">here</a>)
 
 ## License
-Panda3D Discord is licensed under the MIT license. See the provided LICENSE file for details.
+Panda3D REST is licensed under the MIT license. See the provided LICENSE file for details.
