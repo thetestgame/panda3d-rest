@@ -1,6 +1,6 @@
 """
 Author: Jordan Maxwell
-Written: 02/18/2019
+Written: 08/04/2019
 
 The MIT License (MIT)
 
@@ -24,9 +24,3 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-
-from direct.directnotify.DirectNotifyGlobal import directNotify   
-_rest_notify = directNotify.newCategory('rest')
-
-include "request.pyx"
-include "http.pyx"

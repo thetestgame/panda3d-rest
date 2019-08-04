@@ -1,6 +1,6 @@
 """
 Author: Jordan Maxwell
-Written: 02/18/2019
+Written: 08/04/2019
 
 The MIT License (MIT)
 
@@ -25,28 +25,41 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
+
 from panda3d.core import HTTPClient, HTTPChannel, DocumentSpec
 from panda3d.core import Ramfile, UniqueIdAllocator, ConfigVariableInt
 
+from direct.directnotify.DirectNotifyGlobal import directNotify  
+
+from .request import HTTPRequest
+
 import json
 
-cdef class HTTPRest(object):
+class HTTPRest(object):
     """
     Primary class for handling GET/POST requests with Panda's HTTPClient object
     """
 
-    cdef object _http_client
-    cdef object _request_allocator
-    cdef dict _requests
+    notify = directNotify.newCategory('http-rest')
 
-    def __cinit__(self):
+    def __init__(self):
         self._http_client = HTTPClient()
 
         max_http_requests = ConfigVariableInt('http-max-requests', 900).value
         self._request_allocator = UniqueIdAllocator(0, max_http_requests)
+        self._poll_task = None
         self._requests = {}
 
-    cpdef void update(self):
+    def setup(self):
+        """
+        Performs setup operations on the http rest object
+        """
+
+        self._poll_task = taskMgr.add(
+            self.__update, 
+            '%s-update-task' % self.__class__.__name__)
+
+    def __update(self, task):
         """
         Performs update operations on the PandaHTTP instance
         """
@@ -60,15 +73,20 @@ cdef class HTTPRest(object):
             request = self._requests[request_id]
             request.update()
 
-    cpdef void destroy(self):
+        return task.cont
+
+    def destroy(self):
         """
         Performs destruction operations on the PandaHTTP instance
         """
     
+        if self._poll_task:
+            taskMgr.remove(self._poll_task)
+
         for request_id in list(self._requests):
             self.remove_request(request_id)
 
-    cpdef void remove_request(self, request_id):
+    def remove_request(self, request_id):
         """
         Removes the request id form the PandaHTTP request list
         """
@@ -79,26 +97,26 @@ cdef class HTTPRest(object):
         self._request_allocator.free(request_id)
         del self._requests[request_id]
 
-    cpdef int get_request_status(self, request_id):
+    def get_request_status(self, request_id):
         """
         Returns the requests current status
         """
 
         return not request_id in self._requests
 
-    cpdef HTTPRequest get_request(self, request_id):
+    def get_request(self, request_id):
         """
         Returns the requested request if its present
         """
 
         return self._requests.get(request_id, None)
 
-    cpdef int perform_get_request(self, url, headers={}, content_type=None, callback=None):
+    def perform_get_request(self, url, headers={}, content_type=None, callback=None):
         """
         Performs an HTTP restful GET call and returns the request's unique itentifier
         """
 
-        _rest_notify.debug('Sending GET request: %s' % url)
+        self.notify.debug('Sending GET request: %s' % url)
 
         request_channel = self._http_client.make_channel(True)
 
@@ -133,7 +151,7 @@ cdef class HTTPRest(object):
             try:
                 data = json.loads(data)
             except:
-                _rest_notify.warning('Received invalid JSON results: %s' % data)
+                self.notify.warning('Received invalid JSON results: %s' % data)
                 
             callback(data)
 
@@ -143,11 +161,11 @@ cdef class HTTPRest(object):
             headers=headers,
             callback=json_wrapper)
 
-    cpdef int perform_post_request(self, url, headers={}, content_type=None, post_body={}, callback=None):
+    def perform_post_request(self, url, headers={}, content_type=None, post_body={}, callback=None):
         """
         """
 
-        _rest_notify.debug('Sending POST request: %s' % url)
+        self.notify.debug('Sending POST request: %s' % url)
 
         request_channel = self._http_client.make_channel(True)
 
@@ -183,7 +201,7 @@ cdef class HTTPRest(object):
             try:
                 data = json.loads(data)
             except:
-                _rest_notify.warning('Received invalid JSON results: %s' % data)
+                self.notify.warning('Received invalid JSON results: %s' % data)
 
             callback(data)
 

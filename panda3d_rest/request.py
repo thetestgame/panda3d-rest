@@ -1,6 +1,6 @@
 """
 Author: Jordan Maxwell
-Written: 02/18/2019
+Written: 08/04/2019
 
 The MIT License (MIT)
 
@@ -25,18 +25,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
+from direct.directnotify.DirectNotifyGlobal import directNotify  
+
 import traceback
 
-cdef class HTTPRequest(object):
+class HTTPRequest(object):
     """
     Represents an HTTP request in queue
     """
 
-    cdef HTTPRest _rest
-    cdef int _request_id
-    cdef object _channel
-    cdef object _callback
-    cdef object _ram_file
+    notify = directNotify.newCategory('http-request')
 
     def __init__(self, rest, request_id, channel, ram_file, callback=None):
         self._rest = rest
@@ -57,7 +55,7 @@ cdef class HTTPRequest(object):
     def ram_file(self):
         return self._ram_file
 
-    cpdef update(self):
+    def update(self):
         """
         Performs the run operations and finishing callbacks
         for the request's channel instance
@@ -68,13 +66,13 @@ cdef class HTTPRequest(object):
 
         done = not self._channel.run()
         if done:
-            _rest_notify.debug('Completed request: %s' % self._request_id)
+            self.notify.debug('Completed request: %s' % self._request_id)
             
             if self._callback != None:
                 try:
                     self._callback(self._ram_file.get_data())
                 except:
-                    _rest_notify.warning('Exception occured processing callback')
-                    _rest_notify.warning(traceback.format_exc())
+                    self.notify.warning('Exception occured processing callback')
+                    self.notify.warning(traceback.format_exc())
 
             self._rest.remove_request(self._request_id)

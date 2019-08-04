@@ -1,6 +1,6 @@
 """
 Author: Jordan Maxwell
-Written: 02/18/2019
+Written: 08/04/2019
 
 The MIT License (MIT)
 
@@ -25,4 +25,25 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-include "config_rest.pyx"
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
+
+long_description = """
+panda3d-rest provides a panda native solution to performing RESTful HTTP GET/POST requests using non-blocking io.
+"""
+
+setup(
+    name='panda3d-rest',
+    description='panda3d-rest provides a panda native solution to performing RESTful HTTP GET/POST requests using non-blocking io.',
+    long_description=long_description,
+    license='MIT',
+    version='1.0.3',
+    author='Jordan Maxwell',
+    maintainer='Jordan Maxwell',
+    url='https://github.com/NxtStudios/p3d-rest',
+    packages=['panda3d_rest'],
+    classifiers=[
+        'Programming Language :: Python :: 3',
+    ])

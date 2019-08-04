@@ -25,13 +25,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from panda3d import rest
+from panda3d_rest import http
 
 from direct.showbase.ShowBase import ShowBase
 
 base = ShowBase()
 
-def handle_ip(self, data):
+def handle_ip(data):
     """
     Handles the callback data
     """
@@ -39,17 +39,7 @@ def handle_ip(self, data):
     ip = data.get('ip', 'unknown')
     print('My public ip is: %s' % ip)
 
-base.rest = rest.HTTPRest()
+base.rest = http.HTTPRest()
+base.rest.setup()
 base.rest.perform_json_get_request('https://api.ipify.org/?format=json', callback=handle_ip)
-
-def update_rest(self, task):
-    """
-    Updates the rest object
-    """
-
-    base.rest.update()
-    return task.cont
-
-base.taskMgr.add(update_rest, 'update-http')
-
 base.run()
