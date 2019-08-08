@@ -1,3 +1,7 @@
+![GitHub issues](https://img.shields.io/github/issues/NxtStudios/p3d-rest?style=for-the-badge)
+![PyPI - Status](https://img.shields.io/pypi/status/panda3d_rest?style=for-the-badge)
+![Engine](https://img.shields.io/static/v1?style=for-the-badge&label=Engine&message=Panda3D&color=red)
+
 Panda3D REST
 ============
 p3d-rest provides a panda native solution to performing RESTful HTTP GET/POST requests using non-blocking io.
